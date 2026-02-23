@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScrenn } from '../Screen/LoginScrenn';
 import { PRIMARY_COLOR } from '../commons/constans';
+import { RegistroScreen } from '../Screen/RegistroScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,9 @@ export const StackNavigator = () => {
             <Stack.Screen name="Login"
             options={{ headerShown: false }}
             component={LoginScrenn} />
+             <Stack.Screen name="Registro"
+            options={{ headerShown: false }}
+            component={RegistroScreen} />
         </Stack.Navigator>
     );
 }

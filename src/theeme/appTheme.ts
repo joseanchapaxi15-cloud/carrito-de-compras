@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { QUARTERNARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR } from "../commons/constans";
+import { PRIMARY_COLOR, QUARTERNARY_COLOR, SECONDARY_COLOR, TERTIARY_COLOR } from "../commons/constans";
 
 export const stylesGlobal = StyleSheet.create({
     title:{
@@ -41,6 +41,18 @@ export const stylesGlobal = StyleSheet.create({
         color:SECONDARY_COLOR,
         fontSize:15,
         fontWeight:'bold'
+    },
+    iconPassword:{
+        position:'absolute',
+        bottom:15,
+        right:10
+    },
+    textRedirect:{
+        marginTop:20,
+        fontSize:16,
+        color:PRIMARY_COLOR,
+        fontWeight:'bold',
+        textAlign:'center'
     }
 
     

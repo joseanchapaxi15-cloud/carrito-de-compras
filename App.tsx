@@ -1,6 +1,6 @@
 import React from 'react'
-import { View } from 'react-native'
-import { LoginScrenn } from './src/Screen/LoginScrenn'
+
+
 import { NavigationContainer } from '@react-navigation/native'
 import { StackNavigator } from './src/navigator/StackNavigator'
 
