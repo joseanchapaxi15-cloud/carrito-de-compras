@@ -8,34 +8,17 @@ import { ButtonComponent } from '../components/ButtonComponent';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { PRIMARY_COLOR } from '../commons/constans';
 import { CommonActions, useNavigation } from '@react-navigation/native';
+import { User } from '../navigator/StackNavigator';
 
 //interface defina laestructura de lobjeto indicado
 interface Formlogin {
     email: string;
     password: string;
 }
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
+interface Props{
+    users:User[]; //arreglo de usuarios desde stack navigator
 }
-export const LoginScrenn = () => {
-    //datos de prueba
-    const users: User[] = [
-        {
-            id: 1,
-            name: "Juan Perez",
-            email: "juanperez@gmail.com",
-            password: "123456"
-        },
-        {
-            id: 2,
-            name: "Maria Lopez",
-            email: "marialopez@gmail.com",
-            password: "abcdef"
-        }
-    ]
+export const LoginScrenn = ({users}:Props) => {
 
 
     //hook useState: permite getsionar el estado del formilario
@@ -59,8 +42,8 @@ export const LoginScrenn = () => {
 
     }
     //funcion para verificar si exixte el usuario 
-    const verifyUser =()=>{
-        const existUser = users.filter(user=> user.email == formLogin.email && user.password == formLogin.password)[0];
+    const verifyUser = ():User => {
+        const existUser = users.filter(user => user.email == formLogin.email && user.password == formLogin.password)[0];
         return existUser;
     }
     // funcion pata iniciar sesion
@@ -70,12 +53,13 @@ export const LoginScrenn = () => {
             Alert.alert('Error', 'Profavor complete todos los campos');
             return;
         }
-        if(!verifyUser()){
-            Alert.alert('Error','Usuario y/o contraseña incporrectos');
+        if (!verifyUser()) {
+            Alert.alert('Error', 'Usuario y/o contraseña incporrectos');
             return;
         }
 
-        console.log(formLogin);
+        //si todo sale bien se craga la lista de productos 
+        navigate.dispatch(CommonActions.navigate({ name: 'Home' }));
 
     }
     return (
@@ -103,10 +87,10 @@ export const LoginScrenn = () => {
                 </View>
                 <ButtonComponent buttonText='Iniciar' onPress={handleSingIn} />
                 <TouchableOpacity
-                onPress={()=> navigate.dispatch(CommonActions.navigate({name:'Registro'}))}>
+                    onPress={() => navigate.dispatch(CommonActions.navigate({ name: 'Registro' }))}>
                     <Text style={stylesGlobal.textRedirect}>
                         No tienes cuenta? Registrate ahora
-                        </Text>
+                    </Text>
                 </TouchableOpacity>
             </BodyComponent>
         </View>
