@@ -1,10 +1,44 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Text, View } from 'react-native';
+import { Product } from '../HomeScreen';
+import { stylesGlobal } from '../../../theeme/appTheme';
+import Icon from '@expo/vector-icons/MaterialIcons';
+import { TERTIARY_COLOR } from '../../../commons/constans';
+import { ModalProductCommponets } from './ModalProductCommponets';
 
-export const CardProductCommponents = () => {
+interface Props {
+    item: Product;
+}
+
+export const CardProductCommponents = ({ item }: Props) => {
+
+    //hook useState para mostrar el modal del producto seleccionado
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    //funcion para mostrar el modal del producto seleccionado
+    const hidenModal = (): void => {
+        setShowModal(!showModal);
+    }
+
     return (
-        <View>
-            <Text>Lista Productos</Text>
-        </View>
+        <>
+            <View style={stylesGlobal.containerCard}>
+                <Image style={stylesGlobal.imageCard} source={{
+                    uri: item.pathImage
+                }} />
+                <View >
+                    <Text style={stylesGlobal.titleCard}>{item.name}</Text>
+                    <Text style={stylesGlobal.textPrice}>Precio: ${item.price.toFixed(2)}</Text>
+                </View>
+                <View style={stylesGlobal.iconCard}>
+                    <Icon name='add-shopping-cart' 
+                    size={33} 
+                    color={TERTIARY_COLOR} 
+                    onPress={hidenModal}
+                    />
+                </View>
+            </View>
+            <ModalProductCommponets isVisible={showModal} item={item} hidenModal={hidenModal} />
+        </>
     )
 }
