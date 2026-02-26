@@ -8,9 +8,10 @@ import { ModalProductCommponets } from './ModalProductCommponets';
 
 interface Props {
     item: Product;
+    changeStockProduct: (id: number, quantity: number) => void;
 }
 
-export const CardProductCommponents = ({ item }: Props) => {
+export const CardProductCommponents = ({ item, changeStockProduct }: Props) => {
 
     //hook useState para mostrar el modal del producto seleccionado
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -31,14 +32,15 @@ export const CardProductCommponents = ({ item }: Props) => {
                     <Text style={stylesGlobal.textPrice}>Precio: ${item.price.toFixed(2)}</Text>
                 </View>
                 <View style={stylesGlobal.iconCard}>
-                    <Icon name='add-shopping-cart' 
-                    size={33} 
-                    color={TERTIARY_COLOR} 
-                    onPress={hidenModal}
+                    <Icon name='add-shopping-cart'
+                        size={33}
+                        color={TERTIARY_COLOR}
+                        onPress={hidenModal}
                     />
                 </View>
             </View>
-            <ModalProductCommponets isVisible={showModal} item={item} hidenModal={hidenModal} />
+            <ModalProductCommponets isVisible={showModal} item={item} hidenModal={hidenModal}
+                changeStockProduct={changeStockProduct} />
         </>
     )
 }

@@ -9,17 +9,19 @@ interface Props {
     isVisible: boolean;//mostar modal o no
     item: Product;
     hidenModal: () => void;//funcion para ocultar el modal
+    changeStockProduct: (id:number, quantity: number) => void;//funcion para cambiar la cantidad
 }
 
-export const ModalProductCommponets = ({ isVisible, item, hidenModal }: Props) => {
+export const ModalProductCommponets = ({ isVisible, item, hidenModal, changeStockProduct }: Props) => {
     const [quantity, setQuantity] = useState<number>(1);
-
-    //funcion para validar el stock
-    const handleChallengeStock = (value: number): void => {
-
-    }
-
     const { width } = useWindowDimensions();
+    const handleAddProduct=()=>{
+        changeStockProduct(item.id, quantity);
+        hidenModal();
+        //reinicar la cnatidad 
+        setQuantity(1);
+    }
+    
     return (
         <Modal visible={isVisible} animationType='fade' transparent={true}>
             <View style={stylesGlobal.containerModal}>
@@ -27,6 +29,7 @@ export const ModalProductCommponets = ({ isVisible, item, hidenModal }: Props) =
                     ...stylesGlobal.bodyModal,
                     width: width * 0.80
                 }}>
+                    
                     <View style={stylesGlobal.headerModal}>
                         <Text style={stylesGlobal.titleModal}>
                             {item.name} - ${item.price.toFixed(2)}
@@ -58,14 +61,16 @@ export const ModalProductCommponets = ({ isVisible, item, hidenModal }: Props) =
                                         <Text style={{ fontSize: 17 }}>{quantity}</Text>
                                     </TouchableOpacity >
                                     <TouchableOpacity style={stylesGlobal.buttonQuantity}
-                                        onPress={() => setQuantity(quantity + 1)}>
+                                        onPress={() => setQuantity(quantity + 1)}
+                                        disabled={quantity == item.stock}>
                                         <Text style={stylesGlobal.textQuantity}>+</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ alignItems: 'center' }}>
                                     <Text style={stylesGlobal.textTotalPrice}> Total : ${(item.price * quantity).toFixed(2)}</Text>
                                 </View>
-                                <TouchableOpacity style={stylesGlobal.button} >
+                                <TouchableOpacity style={stylesGlobal.button} 
+                                onPress={handleAddProduct}>
                                     <Text style={stylesGlobal.buttonTex}> Agregar Carrito</Text>
                                 </TouchableOpacity>
                             </>

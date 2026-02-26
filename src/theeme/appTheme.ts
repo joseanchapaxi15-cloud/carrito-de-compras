@@ -117,38 +117,83 @@ export const stylesGlobal = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10
     },
-    containerQuantity:{
+    containerQuantity: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 15
     },
-    buttonQuantity:{
+    buttonQuantity: {
         backgroundColor: TERTIARY_COLOR,
         height: 50,
         width: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 50,
-        margin:15
+        margin: 15
     },
-    textQuantity:{
+    textQuantity: {
         color: SECONDARY_COLOR,
         fontSize: 18,
         fontWeight: 'bold',
         padding: 10
     },
-    textTotalPrice:{
+    textTotalPrice: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10
     },
-    textStock:{
+    textStock: {
         fontSize: 18,
         fontWeight: 'bold',
         color: 'red',
         textAlign: 'center',
         marginTop: 10
+    },
+    headerHome: {
+        flexDirection: 'row',
+        alignItems: 'center',
+
+    },
+    icomHome: {
+        flex: 1,
+        alignItems: 'flex-end',
+        paddingTop: 25,
+        paddingRight: 50
+    },
+    textIconCart: {
+        backgroundColor: SECONDARY_COLOR,
+        paddingHorizontal: 5,
+        fontWeight: 'bold',
+        color: PRIMARY_COLOR,
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        textAlign: 'center',
+        textAlignVertical: 'center'
+    },
+    headerTable: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBottom: 10,
+    },
+    headerDescripcion: {
+        flexDirection: 'row',
+
+    },
+    headerTextTable: {
+        fontWeight: 'bold',
+        fontSize: 15,
+    },
+    containerTotalPay: {
+        alignItems: 'flex-end',
+        marginTop: 10,
+
+    },
+    textoTotalPay: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: PRIMARY_COLOR
     }
 
 })

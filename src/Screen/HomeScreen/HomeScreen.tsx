@@ -3,6 +3,10 @@ import { FlatList, Text, View } from 'react-native';
 import { TitleComponent } from '../../components/TitleComponent';
 import { BodyComponent } from '../../components/BodyComponent';
 import { CardProductCommponents } from './componets/CardProductCommponents';
+import Icon from '@expo/vector-icons/MaterialIcons';
+import { SECONDARY_COLOR } from '../../commons/constans';
+import { stylesGlobal } from '../../theeme/appTheme';
+import { ModalCartCommponets } from './componets/ModalCartCommponets';
 
 export interface Product {
     id: number;
@@ -10,6 +14,13 @@ export interface Product {
     price: number;
     stock: number;
     pathImage: string;
+}
+export interface Cart {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+    total: number;
 }
 
 export const HomeScreen = () => {
@@ -27,32 +38,79 @@ export const HomeScreen = () => {
     ];
 
     //hook useState permite gestionar la informacion de los productos 
-    const[productsState, setProductsState] = useState<Product[]>(products);
+    const [productsState, setProductsState] = useState<Product[]>(products);
+
+    //hook useState para gestionar el carrito de compras
+    const [cart, setCart] = useState<Cart[]>([]);//arreglo del carrito
+
+    //hook useState para mostrar el modal del carrito de compras
+    const [showModal, setShowModal] = useState<boolean>(false);
+
+    //funsion para actualisar el estado del modal 
+    const hidenModal = (): void => {
+        setShowModal(!showModal);
+    }
 
     //funcion para controlar el stock de los productos
-    const changeStockProduct = (id: number, quantity: number):void => {
-        const updateProduts = productsState.filter(item=> item.id==id
-            ?{...item, stock: item.stock - quantity}
-            :item);
-            setProductsState(updateProduts);    
-        
+    const changeStockProduct = (id: number, quantity: number): void => {
+        const updateProduts = productsState.filter(item => item.id == id
+            ? { ...item, stock: item.stock - quantity }
+            : item);
+        //modificar el arreglo de productos 
+        setProductsState(updateProduts);
+        //llamar ala funsion para añadir productos al carrito 
+        addProductCart(id, quantity);
 
+
+    }
+    //funcion para agregar productos al carrito de compras
+    const addProductCart = (id: number, quantity: number): void => {
+        const product = productsState.find(product => product.id == id);
+
+
+        // si no exixte el producto 
+        if (!product) {
+            return;
+        }
+        // crear el onjeto de lproducto 
+        const newCart: Cart = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: quantity,
+            total: product.price * quantity
+        }
+
+        //añdir el producto al carrito de compras
+        setCart([...cart, newCart]);
+        console.log(cart);
     }
 
     return (
         <View>
-            <TitleComponent title='Productos' />
+            <View style={stylesGlobal.headerHome}>
+                <TitleComponent title='Productos' />
+                <View style={stylesGlobal.icomHome}>
+                    <Text style={stylesGlobal.textIconCart}>{cart.length}</Text>
+                    <Icon name='shopping-cart'
+                        color={SECONDARY_COLOR}
+                        size={30}
+                        onPress={hidenModal}
+                    />
+                </View>
+
+            </View>
+
             <BodyComponent>
                 <FlatList
                     data={productsState}
-                    renderItem={({ item }) => <CardProductCommponents item={item} />}
+                    renderItem={({ item }) => <CardProductCommponents item={item} changeStockProduct={changeStockProduct} />}
                     keyExtractor={(item) => item.id.toString()}
                     numColumns={2}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}
                 />
             </BodyComponent>
-
-
+            <ModalCartCommponets isVisible={showModal} cart={cart} hiddenModal={hidenModal} />
         </View>
     )
 }
